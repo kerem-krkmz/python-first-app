@@ -1,44 +1,40 @@
+# Fixed Screen size as android screen
+from kivy.config import Config
+Config.set('graphics', 'width', '360')
+Config.set('graphics', 'height', '740')
+# remove both line when build App
+
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.core.window import Window
+from kivy.uix.screenmanager import ScreenManager
+
 import speech_recognition as sr
 import playsound
 from gtts import gTTS
 
-Window.size = (350, 600)
-screen_helper = """
-Screen:
-    BoxLayout:
-        orientation: "vertical"
-        MDToolbar:
-            title: "App"
-            left_action_items: [["menu", lambda x: app.navigation_draw()]]
-            right_action_items: [["clock", lambda x: app.navigation_draw()]]
-            elevation: 13
-        MDLabel:
-            text: "You can start talking  by pressing the microphone button."
-            halign: "center"
-        
-        MDBottomAppBar:
-            MDToolbar:
-                title: "Help"
-                left_action_items: [["account", lambda x: app.navigation_draw()]]
-                elevation: 13
-                mode: "free-end" #free-end,end 
-                type: "bottom"
-                icon: "microphone-outline"
-                on_action_button: app.voice_pyh()
-        
-            
-"""
 
 
 class DemoApp(MDApp):
+    def change_screen(self,name):
+        screen_manager.current = name
+
     def build(self):
-        self.theme_cls.primary_palette = "LightBlue"
-        self.theme_cls.primary_hue = "A200"
-        screen = Builder.load_string(screen_helper)
-        return screen
+        
+        # self.theme_cls.primary_palette = "LightBlue"
+        # self.theme_cls.primary_hue = "A200"
+        # screen = Builder.load_string(screen_helper)
+        # return screen
+        global screen_manager
+        screen_manager = ScreenManager()
+        screen_manager.add_widget(Builder.load_file("ui//login.kv"))
+        screen_manager.add_widget(Builder.load_file("ui//signup.kv"))
+        screen_manager.add_widget(Builder.load_file("ui//forgot.kv"))
+        screen_manager.add_widget(Builder.load_file("ui//verification.kv"))
+        screen_manager.add_widget(Builder.load_file("ui//home.kv"))
+        self.theme_cls.theme_style="Light"
+        
+        return screen_manager
 
     def navigation_draw(self):
         print("deneme")
