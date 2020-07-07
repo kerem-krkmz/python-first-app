@@ -1,0 +1,27 @@
+#:kivy 1.0
+#:import APP_NAME config.APP_NAME
+#:import COMPANY_NAME config.COMPANY_NAME
+
+MDScreen:
+    name: "home"
+    BoxLayout:
+        orientation: "vertical"
+        MDToolbar:
+            title: "App"
+            left_action_items: [["menu", lambda x: app.navigation_draw()]]
+            right_action_items: [["clock", lambda x: app.navigation_draw()]]
+            elevation: 13
+        MDLabel:
+            text: "You can start talking  by pressing the microphone button."
+            halign: "center"
+        
+        MDBottomAppBar:
+            MDToolbar:
+                title: "Help"
+                left_action_items: [["account", lambda x: app.navigation_draw()]]
+                elevation: 13
+                mode: "free-end" #free-end,end 
+                type: "bottom"
+                icon: "microphone-outline"
+                on_action_button: app.voice_pyh()
+        
